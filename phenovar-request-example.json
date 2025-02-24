@@ -1,0 +1,49 @@
+{
+    "patient_details": {
+        "externalid": "<your-case-id>:REQUIRED",
+        "sex": "F/H/M:OPTIONAL",
+        "maternal_affected": "<true/false>:OPTIONAL",
+        "paternal_affected": "<true/false>:OPTIONAL",
+        "label": "<some patient label>:OPTIONAL",
+        "cohort": "<some cohort name>:OPTIONAL"
+    },
+    "phenotype_hpo_code_list":
+    [
+        "HP:00998",
+        "..."
+    ],
+    "phenotype_onset_hpo_code": "HP:",
+    "analysis_files": [
+        {
+            "type": "PATIENT_FILE_ATTR_PATIENT_CALLED_SNV",
+            "filename": "32185.hard-filtered.gvcf.gz"
+        },
+        {
+            "type": "PATIENT_FILE_ATTR_PATIENT_CALLED_CNV",
+            "filename": "32185.cnv.vcf.gz"
+        },
+        {
+            "type": "PATIENT_FILE_ATTR_MATERNAL_CALLED_SNV",
+            "filename": "32457.hard-filtered.gvcf.gz"
+        },
+        {
+            "type": "PATIENT_FILE_ATTR_MATERNAL_CALLED_CNV",
+            "filename": "32457.cnv.vcf.gz"
+        },
+        {
+            "type": "PATIENT_FILE_ATTR_PATERNAL_CALLED_SNV",
+            "filename": "32899.hard-filtered.gvcf.gz"
+        },
+        {
+            "type": "PATIENT_FILE_ATTR_PATERNAL_CALLED_CNV",
+            "filename": "32899.cnv.vcf.gz"
+        }
+    ],
+    "download_specifications": {
+        "source": "AWS",
+        "details": {
+            "bucket_name": "<your-bucket-name>",
+            "root_folder": "<your-root-folder>"
+        }
+    }
+}
