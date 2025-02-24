@@ -1,0 +1,132 @@
+{
+    "externalid": "<patient.externalid>",
+    "barcode" : "<patient.barcode>",
+    "label": "<patient.label>",
+    "cohort": "<patient.category>",
+    "disease_gene_list": [
+        {
+            "gene": {
+                "symbol": "<diseasegenewrapper.gene_symbol>",
+                "id_hgnc": "<diseasegenewrapper.gene_model.id_hgnc>",
+                "id_ensembl": "<diseasegenewrapper.gene_model.id_ensembl>",
+                "id_ncbi": "<diseasegenewrapper.gene_model.id_hncbi>"
+            },
+            "disease": {
+                "omim_code": "diseasegenewrapper.disease_code",
+                "omim_name": "diseasegenewrapper.disease_name"
+            },
+            "inheritance_mode_list": [
+                "autosomal dominant",
+                "autosomal recessive"
+            ],
+            "annotation_list": {
+                "clingen_hi": bool,
+                "clingen_ts": bool,
+                "haploinsufficiency_pli_score": "diseasegenewrapper.haploinsuficiency_wrapper.pli_score"
+            },
+            "patient_phenotype_match_list": [
+                {
+                    "hpo_code": "<code>",
+                    "is_matching": bool
+                }
+            ],
+            "patient_onset_match": [
+                {
+                    "hpo_code": "<code>",
+                    "is_matching": bool
+                }
+            ],
+            "diagnosis_likelihood": {
+                "label": "very likely",
+                "rank": int,
+                "score": float,
+                "filter_mode": "<phenotype_specific/incidental_findings/GUS>"
+            },
+            "diagnosis_likelihood_history": [
+                {"cause": "...", "score": float},
+                {}
+            ],
+            "diagnosis_likelihood_snv_list":
+            [
+                {
+                    "signature": "chr17:17793787:AGCAG:ACAG",
+                    "causality": "<causal/supplementary>",
+                    "description":
+                    {
+                        "transcript": "NM_030665.4",
+                        "HGVS": "p.Gln280fs/c.840delG"
+                    },
+                    "score":
+                    {
+                        "label": "likely pathogenic",
+                        "value": float
+                    },
+                    "score_history": [
+                        { "cause": "...", "value": float},
+                        {}
+                    ],
+                    "annotation_list": []
+                },
+                {}
+            ],
+            "diagnosis_likelihood_cnv_list":
+            [
+                {
+                    "signature": "chr13:140000:150000:DEL",
+                    "description":
+                    {
+                        "type": "<DEL/DUP>",
+                        "transcript": "NM_...",
+                        "exon_rank_range": "<int or int-int>",
+                        "is_intronic": bool,
+                        "is_intergenic": bool
+
+                    },
+                    "causality": "<causal/supplementary>",
+                    "nb_gene_overlap": int,
+                    "annotation_list":
+                    [
+                        "clingen_cnv": bool,
+                        "dgv": bool
+                    ],
+                    "score":
+                    {
+                        "label": "likely pathogenic",
+                        "value": float
+                    },
+                    "score_history": [
+                        { "cause": "...", "value": float"},
+                        {}
+                    ]
+                },
+                {}
+            ]
+        }
+    ],
+    "multigenic_cnv_list": [
+        {
+            "signature": "chr1:146960134-147936716:DUP",
+            "gene_list":
+            [
+                "GJA5",
+                "GJA8",
+                "..."
+            ]
+        }
+    ],
+    "upd_stats": {
+        "maternal_snv_percent_average": 48.10,
+        "maternal_snv_percent_stdev": 11.20,
+        "maternal_snv_percent_by_chromosome" :
+        [
+            {
+                "chromosome": "chr5",
+                "maternal_snv_percent": 48.65,
+                "in_expected_percent_range": bool
+            },
+            {}
+        ],
+        "expected_percent_range": [30.0,70.0]
+    },
+    "version": "1.0.0",
+}
