@@ -1,0 +1,120 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id" : "urn:github:phenovar-rest-api/phenovar-request.schema.json",
+    "title": "Phenovar REST API request for endpoint: ",
+    "description": "JSON request for the Phenovar REST API.",
+    "type": "object",
+    "properties": {
+        "patient_details": {
+            "type": "object",
+            "description": "Identifies the patient and provides optional attributes. Required.",
+            "properties": {
+                "externalid": {
+                    "type": "string",
+                    "description": "A unique identifier for the patient. Tipically the issuing laboratory ID. Required."
+                },
+                "sex": {
+                    "type": "string",
+                    "description": "The sex of the patient. F for female, M for male. Version française: F pour femme, H pour homme. Optional.",
+                    "enum": [
+                        "F",
+                        "M",
+                        "H"
+                    ]
+                },
+                "maternal_affected": {
+                    "type": "boolean",
+                    "description": "Whether the mother is affected. Optional."
+                },
+                "paternal_affected": {
+                    "type": "boolean",
+                    "description": "Whether the father is affected. Optional."
+                },
+                "label": {
+                    "type": "string",
+                    "description": "An additional label to identify patient. Optional."
+                },
+                "cohort": {
+                    "type": "string",
+                    "description": "Cohort name, for categorisation. Optional."
+                }
+            },
+            "required": [
+                "externalid"
+            ]
+        },
+        "phenotype_hpo_code_list": {
+            "type": "array",
+            "description": "A list of HPO codes, one per phenotype. Required.",
+            "items": {
+                "type": "string",
+                "description": "An HPO code."
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "phenotype_global_onset_hpo_code": {
+            "type": "string",
+            "description": "The HPO code for the global onset. Should be the earliest onset among the phenotypes listed in phenotype_hpo_code_list. Optional."
+        },
+        "analysis_files": {
+            "type": "array",
+            "description": "A list of analysis file descriptors. Required.",
+            "items": {
+                "type": "object",
+                "description": "An analysis file descriptior.",
+                "properties": {
+                    "filetype": {
+                        "type": "string",
+                        "description": "The analysis file descriptor type. Required.",
+                        "enum": [
+                            "PATIENT_FILE_ATTR_PATIENT_CALLED_SNV",
+                            "PATIENT_FILE_ATTR_PATIENT_CALLED_CNV",
+                            "PATIENT_FILE_ATTR_MATERNAL_CALLED_SNV",
+                            "PATIENT_FILE_ATTR_MATERNAL_CALLED_CNV",
+                            "PATIENT_FILE_ATTR_PATERNAL_CALLED_SNV",
+                            "PATIENT_FILE_ATTR_PATERNAL_CALLED_CNV"
+                        ]
+                    },
+                    "filepath": {
+                        "type": "string",
+                        "description": "The analysis file path inside the S3 bucket. Optional bucket_root_folder will be prepended. Required."
+                    }
+                },
+                "required": [
+                    "filetype",
+                    "filepath"
+                ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "s3_specifications": {
+            "type": "object",
+            "description": "S3 specifications. Overrides phenovar user property. Optional.",
+            "properties": {
+                "source": {
+                    "type": "string",
+                    "description": "The source of the S3 bucket: AWS or Minio. Overrides phenovar user property. Optional.",
+                    "enum": [
+                        "aws",
+                        "minio"
+                    ]
+                },
+                "bucket_name": {
+                    "type": "string",
+                    "description": "The bucket name. Overrides phenovar user property. Optional."
+                },
+                "bucket_root_folder": {
+                    "type": "string",
+                    "description": "The bucket root folder to prepend to all filepaths. Optional."
+                }
+            }
+        }
+    },
+    "required": [
+        "patient_details",
+        "phenotype_hpo_code_list",
+        "analysis_files"
+    ]
+}
