@@ -12,7 +12,7 @@
         "HP:00998",
         "..."
     ],
-    "phenotype_global_onset_hpo_code": "HP:",
+    "phenotype_onset_hpo_code": "HP:",
     "analysis_files": [
         {
             "filetype": "PATIENT_FILE_ATTR_PATIENT_CALLED_SNV",
@@ -39,9 +39,11 @@
             "filepath": "32899.cnv.vcf.gz"
         }
     ],
-    "s3_specifications": {
-        "source": "minio",
-        "bucket_name": "<your-bucket-name>",
-        "bucket_root_folder": "<your-root-folder>"
+    "download_specifications": {
+        "source": "s3_minio",
+        "details": {
+            "s3_bucket_name": "<your-bucket-name>",
+            "s3_bucket_root_path": "<your-root-folder>"
+        }
     }
 }
