@@ -1,146 +1,156 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id" : "urn:github:phenovar-rest-api/phenovar-request.schema.json",
-    "title": "Phenovar REST API request for endpoint: ",
-    "description": "JSON request for the Phenovar REST API.",
-    "type": "object",
-    "properties": {
-        "patient_details": {
-            "type": "object",
-            "properties": {
-                "externalid": {
-                    "type": "string",
-                    "minLength": 1,
-                    "title": "External ID",
-                    "description": "A unique identifier for the patient. Typically the issuing laboratory ID. Required."
-                },
-                "sex": {
-                    "type": "string",
-                    "enum": [
-                        "F",
-                        "M",
-                        "H"
-                    ],
-                    "title": "Sex",
-                    "description": "Sex of the patient. F for female, M for male. Version fran\u00e7aise: F pour femme, H pour homme. Optional."
-                },
-                "maternal_affected": {
-                    "type": "boolean",
-                    "title": "Mother is affected",
-                    "description": "Whether the mother is affected. Optional."
-                },
-                "paternal_affected": {
-                    "type": "boolean",
-                    "title": "Father is affected",
-                    "description": "Whether the father is affected. Optional."
-                },
-                "label": {
-                    "type": "string",
-                    "minLength": 1,
-                    "title": "Label",
-                    "description": "An additional label to identify patient. Optional."
-                },
-                "cohort": {
-                    "type": "string",
-                    "minLength": 1,
-                    "title": "Cohort",
-                    "description": "Cohort name, for categorisation. Optional."
-                }
-            },
-            "required": [
-                "externalid"
-            ],
-            "title": "Patient Details ... ...",
-            "description": "Identifies the patient and provides optional attributes. Required."
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:github:phenovar-rest-api/phenovar-request.schema.json",
+  "title": "Phenovar REST API request for endpoint: dxtablegenerator/generate",
+  "description": "JSON request for the Phenovar REST API endpoint dxtablegenerator/generate.",
+  "type": "object",
+  "properties": {
+    "patient_details": {
+      "type": "object",
+      "properties": {
+        "externalid": {
+          "type": "string",
+          "minLength": 1,
+          "title": "External ID",
+          "description": "A unique identifier for the patient. Typically the issuing laboratory ID. Required."
         },
-        "phenotype_hpo_code_list": {
-            "type": "array",
-            "items": {
-                "type": "string",
-                "minLength": 1,
-                "title": "HPO code",
-                "description": "An HPO code"
-            },
-            "title": "Phenotype HPO code list",
-            "description": "A list of HPO codes, one per phenotype. Required."
+        "sex": {
+          "type": "string",
+          "enum": [
+            "F",
+            "M",
+            "H"
+          ],
+          "title": "Sex",
+          "description": "Sex of the patient. F for female, M for male. Version française: F pour femme, H pour homme. Optional."
         },
-        "phenotype_onset_hpo_code": {
+        "maternal_affected": {
+          "type": "boolean",
+          "title": "Mother is affected",
+          "description": "Whether the mother is affected. Optional."
+        },
+        "paternal_affected": {
+          "type": "boolean",
+          "title": "Father is affected",
+          "description": "Whether the father is affected. Optional."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "title": "Label",
+          "description": "An additional label to identify patient. Optional."
+        },
+        "cohort": {
+          "type": "string",
+          "minLength": 1,
+          "title": "Cohort",
+          "description": "Cohort name, for categorisation. Optional."
+        }
+      },
+      "required": [
+        "externalid"
+      ],
+      "title": "Patient Details ... ...",
+      "description": "Identifies the patient and provides optional attributes. Required."
+    },
+    "phenotype_hpo_code_list": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "title": "HPO code",
+        "description": "An HPO code"
+      },
+      "title": "Phenotype HPO code list",
+      "description": "A list of HPO codes, one per phenotype. Required."
+    },
+    "phenotype_onset_hpo_code": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Phenotype onset HPO code",
+      "description": "The HPO code for the global onset. Should be the earliest onset among the phenotypes listed in phenotype_hpo_code_list. Optional."
+    },
+    "analysis_files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "filepath": {
             "type": "string",
             "minLength": 1,
-            "title": "Phenotype onset HPO code",
-            "description": "The HPO code for the global onset. Should be the earliest onset among the phenotypes listed in phenotype_hpo_code_list. Optional."
+            "title": "File path",
+            "description": "Complete filename with path in download service (e.g. in S3 bucket)."
+          },
+          "filetype": {
+            "type": "string",
+            "enum": [
+              "patient_called_snv",
+              "patient_called_cnv",
+              "maternal_called_snv",
+              "maternal_called_cnv",
+              "paternal_called_snv",
+              "paternal_called_cnv"
+            ],
+            "title": "File type",
+            "description": "Type of file."
+          },
+          "reuse": {
+            "type": "boolean",
+            "title": "Reuse",
+            "description": "Reuse the already processed file. Optional."
+          }
         },
-        "analysis_files": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "filepath": {
-                        "type": "string",
-                        "minLength": 1,
-                        "title": "File path",
-                        "description": "Complete filename with path in download service (e.g. in S3 bucket)."
-                    },
-                    "filetype": {
-                        "type": "string",
-                        "enum": [
-                            "patient_called_snv",
-                            "patient_called_cnv",
-                            "maternal_called_snv",
-                            "maternal_called_cnv",
-                            "paternal_called_snv",
-                            "paternal_called_cnv"
-                        ],
-                        "title": "File type",
-                        "description": "Type of file."
-                    }
-                },
-                "required": [
-                    "filepath",
-                    "filetype"
-                ],
-                "title": "Analysis file descriptor",
-                "description": "An analysis file descriptior."
-            },
-            "title": "Analysis files",
-            "description": "A list of analysis file descriptors. Required."
-        },
-        "download_specifications": {
-            "type": "object",
-            "properties": {
-                "source": {
-                    "type": "string",
-                    "minLength": 1,
-                    "title": "Source",
-                    "description": "Name of the source to manage downloads. Overrides phenovar3 user property download_source. Optional."
-                },
-                "details": {
-                    "type": "object",
-                    "properties": {
-                        "s3_bucket_name": {
-                            "type": "string",
-                            "minLength": 1,
-                            "title": "S3 bucket name",
-                            "description": "Name of the S3 bucket. Overrides phenovar3 user property. Optional."
-                        },
-                        "s3_bucket_root_path": {
-                            "type": "string",
-                            "minLength": 1,
-                            "title": "S3 bucket root path",
-                            "description": "A root folder path that will be prepended to all filepaths in S3 bucket. Overrides phenovar3 user property. Optional."
-                        }
-                    },
-                    "title": "Download details",
-                    "description": "Download detail parameters. Optional."
-                }
-            },
-            "title": "Download specifications",
-            "description": "Download specifications. Optional."
-        }
+        "required": [
+          "filepath",
+          "filetype"
+        ],
+        "title": "Analysis file descriptor",
+        "description": "An analysis file descriptior."
+      },
+      "title": "Analysis files",
+      "description": "A list of analysis file descriptors. Required."
     },
-    "required": [
-        "patient_details",
-        "phenotype_hpo_code_list",
-        "analysis_files"
-    ]
+    "download_specifications": {
+      "type": "object",
+      "properties": {
+        "download_source": {
+          "type": "string",
+          "minLength": 1,
+          "title": "Download source",
+          "description": "Name of the source to manage downloads. Overrides user property download_source. Optional."
+        },
+        "details": {
+          "type": "object",
+          "properties": {
+            "s3_bucket_name": {
+              "type": "string",
+              "minLength": 1,
+              "title": "S3 bucket name",
+              "description": "Name of the S3 bucket. Overrides user property. Optional."
+            },
+            "s3_bucket_root_path": {
+              "type": "string",
+              "minLength": 1,
+              "title": "S3 bucket root path",
+              "description": "A root folder path that will be prepended to all filepaths in S3 bucket. Overrides user property. Optional."
+            }
+          },
+          "title": "Download details",
+          "description": "Download detail parameters. Optional."
+        }
+      },
+      "title": "Download specifications",
+      "description": "Download specifications. Optional."
+    },
+    "dev_no_file_processing": {
+      "type": "boolean",
+      "title": "No file processing (for dev only)",
+      "description": "Disable file processing. Optional. For dev only."
+    }
+  },
+  "required": [
+    "patient_details",
+    "phenotype_hpo_code_list",
+    "analysis_files"
+  ]
 }
