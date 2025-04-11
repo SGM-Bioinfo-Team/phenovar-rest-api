@@ -1,49 +1,32 @@
 {
-    "patient_details": {
-        "externalid": "<your-case-id>:REQUIRED",
-        "sex": "H",
-        "maternal_affected": false,
-        "paternal_affected": false,
-        "label": "<some patient label>:OPTIONAL",
-        "cohort": "<some cohort name>:OPTIONAL"
-    },
-    "phenotype_hpo_code_list":
+  "patient_details": {
+      "externalid": "2024MDYS_01-T1--chr10",
+      "label": "2024MDYS_01-T1--chr10",
+      "category": "qlin-test",
+      "maternal_affected": true
+  },
+  "phenotype_hpo_code_list":
     [
-        "HP:00998",
-        "..."
+      "HP:0000151", 
+      "HP:0001762",
+      "HP:0002009",
+      "HP:0010958"
     ],
-    "phenotype_onset_hpo_code": "HP:",
-    "analysis_files": [
-        {
-            "filetype": "PATIENT_FILE_ATTR_PATIENT_CALLED_SNV",
-            "filepath": "32185.hard-filtered.gvcf.gz"
-        },
-        {
-            "filetype": "PATIENT_FILE_ATTR_PATIENT_CALLED_CNV",
-            "filepath": "32185.cnv.vcf.gz"
-        },
-        {
-            "filetype": "PATIENT_FILE_ATTR_MATERNAL_CALLED_SNV",
-            "filepath": "32457.hard-filtered.gvcf.gz"
-        },
-        {
-            "filetype": "PATIENT_FILE_ATTR_MATERNAL_CALLED_CNV",
-            "filepath": "32457.cnv.vcf.gz"
-        },
-        {
-            "filetype": "PATIENT_FILE_ATTR_PATERNAL_CALLED_SNV",
-            "filepath": "32899.hard-filtered.gvcf.gz"
-        },
-        {
-            "filetype": "PATIENT_FILE_ATTR_PATERNAL_CALLED_CNV",
-            "filepath": "32899.cnv.vcf.gz"
-        }
-    ],
-    "download_specifications": {
-        "source": "s3_minio",
-        "details": {
-            "s3_bucket_name": "<your-bucket-name>",
-            "s3_bucket_root_path": "<your-root-folder>"
-        }
+  "phenotype_onset_hpo_code": "HP:0010958",
+  "download_specifications": {
+    "download_source": "s3_minio",
+    "details": {
+      "bucket_name": "phenovar3-test"
     }
+  },
+  "analysis_files": [
+    {
+      "filepath": "2024MDYS_01-T1--chr10.called.vcf.gz",
+      "filetype": "patient_called_snv"
+    },
+    {
+      "filepath": "2024MDYS_01-T1--chr10.dragen.cnv.vcf.gz",
+      "filetype": "patient_called_cnv"
+    }
+  ]
 }
