@@ -28,5 +28,6 @@
       "filepath": "2024MDYS_01-T1--chr10.dragen.cnv.vcf.gz",
       "filetype": "patient_called_cnv"
     }
-  ]
+  ],
+  "schema_version": "1.0.0"
 }

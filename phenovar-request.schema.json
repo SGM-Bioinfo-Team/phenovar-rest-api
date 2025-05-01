@@ -142,15 +142,29 @@
       "title": "Download specifications",
       "description": "Download specifications. Optional."
     },
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0.0"
+      ],
+      "title": "REST API JSON schema version",
+      "description": "REST API JSON schema version."
+    },
     "dev_no_file_processing": {
       "type": "boolean",
       "title": "No file processing (for dev only)",
       "description": "Disable file processing. Optional. For dev only."
+    },
+    "dev_no_dxtable_creation": {
+      "type": "boolean",
+      "title": "No Dxtable creation (for dev only)",
+      "description": "Disable Dxtable creation. Optional. For dev only."
     }
   },
   "required": [
     "patient_details",
     "phenotype_hpo_code_list",
-    "analysis_files"
+    "analysis_files",
+    "schema_version"
   ]
 }
