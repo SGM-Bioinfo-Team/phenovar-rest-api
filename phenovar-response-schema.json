@@ -1,0 +1,730 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:github:phenovar-rest-api/phenovar-response.schema.json",
+  "title": "Phenovar REST API response for endpoint: dxtablegenerator/generate",
+  "description": "JSON response for the Phenovar REST API endpoint dxtablegenerator/generate.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Message"
+    },
+    "authenticated_as": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Authenticated as"
+    },
+    "externalid": {
+      "type": "string",
+      "minLength": 1,
+      "title": "External ID",
+      "description": "A unique identifier for the patient. Typically the issuing laboratory ID. Required."
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Label",
+      "description": "An additional label to identify patient."
+    },
+    "cohort": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Cohort",
+      "description": "Cohort name, for categorisation."
+    },
+    "barcode": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Barcode",
+      "description": "Phenovar3 patient barcode."
+    },
+    "disease_gene_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gene": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Gene symbol",
+                "description": "Gene symbol."
+              },
+              "id_hgnc": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Gene HGNC ID",
+                "description": "Gene HGNC ID."
+              },
+              "id_ensembl": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Gene Ensembl ID",
+                "description": "Gene Ensembl ID."
+              },
+              "id_ncbi": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Gene NCBI ID",
+                "description": "Gene NCBI ID (Entrez ID)."
+              }
+            },
+            "required": [
+              "symbol",
+              "id_hgnc",
+              "id_ensembl",
+              "id_ncbi"
+            ],
+            "title": "Gene",
+            "description": "Gene."
+          },
+          "disease": {
+            "type": "object",
+            "properties": {
+              "omim_code": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Disease OMIM code",
+                "description": "Disease OMIM code."
+              },
+              "omim_name": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Disease OMIM name",
+                "description": "Disease OMIM name."
+              }
+            },
+            "required": [
+              "omim_code",
+              "omim_name"
+            ],
+            "title": "Disease",
+            "description": "Disease."
+          },
+          "inheritance_mode_list": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": "Inheritance mode list",
+            "description": "Inheritance mode list."
+          },
+          "annotation_list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "is_clingen_hi": {
+                  "type": "boolean",
+                  "title": "Is Clingen HI",
+                  "description": "Is Clingen haploinsufficient."
+                },
+                "is_clingen_ts": {
+                  "type": "boolean",
+                  "title": "Is Clingen TS",
+                  "description": "Is Clingen triplosensitive."
+                }
+              },
+              "required": [
+                "is_clingen_hi",
+                "is_clingen_ts"
+              ]
+            },
+            "title": "Annotation list",
+            "description": "List of selected annotations for this disease gene."
+          },
+          "patient_phenotype_match_list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "patient_hpo_code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "title": "Patient phenotype HPO term code",
+                  "description": "Patient phenotype HPO term code."
+                },
+                "patient_hpo_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "title": "Patient phenotype HPO term name",
+                  "description": "Patient phenotype HPO term name."
+                },
+                "is_matching": {
+                  "type": "boolean",
+                  "title": "Patient phenotype is matching disease",
+                  "description": "Patient phenotype is matching disease phenotype."
+                },
+                "matching_level": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "title": "Patient phenotype matching level",
+                  "description": "Patient phenotype matching level vs disease phenotype. Can be None/null.\n        <ul>\n            <li>0: exact match, e.g. both patient and disease term are exactly the same.</li>\n            <li>>0: patient term is more specific by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=3 meaning that patient term \"Ventricular septal defect\" is more specific by three level than disease term \"Abnormal heart morphology\".</li></ul>\n            <li><0: patient term is more general by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=-1 meaning that patient term \"Growth delay\" is more general by one level than disease term \"Short stature\".</li></ul>\n            <li>None/null: no match.</li>\n        </ul>\n        "
+                },
+                "disease_hpo_code": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1,
+                  "title": "Disease phenotype HPO term code",
+                  "description": "Disease phenotype HPO term code. None/null if no match."
+                },
+                "disease_hpo_name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1,
+                  "title": "Disease phenotype HPO term name",
+                  "description": "Disease phenotype HPO term name. None/null if no match."
+                }
+              },
+              "required": [
+                "patient_hpo_code",
+                "patient_hpo_name",
+                "is_matching",
+                "matching_level",
+                "disease_hpo_code",
+                "disease_hpo_name"
+              ]
+            },
+            "title": "Patient phenotype match data list",
+            "description": "List of phenotype matching data between patient and disease."
+          },
+          "patient_onset_match": {
+            "type": "object",
+            "properties": {
+              "patient_hpo_code": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Patient phenotype HPO term code",
+                "description": "Patient phenotype HPO term code."
+              },
+              "patient_hpo_name": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Patient phenotype HPO term name",
+                "description": "Patient phenotype HPO term name."
+              },
+              "is_matching": {
+                "type": "boolean",
+                "title": "Patient onset is matching disease",
+                "description": "Patient onset is matching disease onset."
+              },
+              "matching_level": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "title": "Patient phenotype matching level",
+                "description": "Patient phenotype matching level vs disease phenotype. Can be None/null.\n        <ul>\n            <li>0: exact match, e.g. both patient and disease term are exactly the same.</li>\n            <li>>0: patient term is more specific by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=3 meaning that patient term \"Ventricular septal defect\" is more specific by three level than disease term \"Abnormal heart morphology\".</li></ul>\n            <li><0: patient term is more general by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=-1 meaning that patient term \"Growth delay\" is more general by one level than disease term \"Short stature\".</li></ul>\n            <li>None/null: no match.</li>\n        </ul>\n        "
+              },
+              "disease_hpo_code": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "title": "Disease phenotype HPO term code",
+                "description": "Disease phenotype HPO term code. None/null if no match."
+              },
+              "disease_hpo_name": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "title": "Disease phenotype HPO term name",
+                "description": "Disease phenotype HPO term name. None/null if no match."
+              },
+              "hpo_code": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Onset HPO term code",
+                "description": "HPO term code for patient onset."
+              }
+            },
+            "required": [
+              "patient_hpo_code",
+              "patient_hpo_name",
+              "is_matching",
+              "matching_level",
+              "disease_hpo_code",
+              "disease_hpo_name",
+              "hpo_code"
+            ],
+            "title": "Patient onset match data",
+            "description": "Onset matching data between patient and disease. Absent (None/null) if patient have no onset data."
+          },
+          "diagnosis_likelihood": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "enum": [
+                  "very likely",
+                  "likely",
+                  "possible",
+                  "unlikely"
+                ],
+                "title": "Diagnosis likelihood label",
+                "description": "Diagnosis likelihood label."
+              },
+              "rank": {
+                "type": "integer",
+                "title": "Diagnosis likelihood rank",
+                "description": "Diagnosis likelihood rank."
+              },
+              "score": {
+                "type": "number",
+                "title": "Diagnosis likelihood score",
+                "description": "Diagnosis likelihood score."
+              },
+              "filter_mode": {
+                "type": "string",
+                "enum": [
+                  "phenotype_specific",
+                  "incidental_findings",
+                  "gus"
+                ],
+                "title": "Diagnosis likelihood filter mode",
+                "description": "Diagnosis likelihood filter mode."
+              }
+            },
+            "required": [
+              "label",
+              "rank",
+              "score",
+              "filter_mode"
+            ],
+            "title": "Diagnosis likelihood score data",
+            "description": "Diagnosis likelihood score data."
+          },
+          "diagnosis_likelihood_history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "title": "Score cause text",
+                  "description": "Text describing a cause for the score value."
+                },
+                "score": {
+                  "type": "number",
+                  "title": "Score cause value",
+                  "description": "Value for the score cause."
+                }
+              },
+              "required": [
+                "text",
+                "score"
+              ]
+            },
+            "title": "Diagnosis likelihood scoring history",
+            "description": "Diagnosis likelihood scoring history."
+          },
+          "diagnosis_likelihood_snv_list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "signature": {
+                  "type": "string",
+                  "minLength": 1,
+                  "title": "VARIANT signature",
+                  "description": "VARIANT signature: :."
+                },
+                "causality": {
+                  "type": "string",
+                  "enum": [
+                    "causal",
+                    "supplementary"
+                  ],
+                  "title": "VARIANT causality",
+                  "description": "VARIANT causality: likely_causative, likely_non_causative, non_causative."
+                },
+                "score": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "enum": [
+                        "pathogenic",
+                        "likely pathogenic",
+                        "uncertain significance high",
+                        "uncertain significance",
+                        "uncertain significance low",
+                        "likely benign",
+                        "benign"
+                      ],
+                      "title": "Variant score label",
+                      "description": "Variant score label."
+                    },
+                    "value": {
+                      "type": "number",
+                      "title": "Variant score value",
+                      "description": "Variant score value."
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "value"
+                  ],
+                  "title": "VARIANT score",
+                  "description": "VARIANT score."
+                },
+                "score_history": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Score cause text",
+                        "description": "Text describing a cause for the score value."
+                      },
+                      "score": {
+                        "type": "number",
+                        "title": "Score cause value",
+                        "description": "Value for the score cause."
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "score"
+                    ]
+                  },
+                  "title": "VARIANT scoring history",
+                  "description": "VARIANT scoring history."
+                },
+                "annotation_list": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": "VARIANT annotation list",
+                  "description": "VARIANT annotation list."
+                },
+                "description": {
+                  "type": "object",
+                  "properties": {
+                    "transcript": {
+                      "type": "string",
+                      "minLength": 1,
+                      "title": "SNV transcript",
+                      "description": "SNV transcript."
+                    },
+                    "HGVS": {
+                      "type": "string",
+                      "minLength": 1,
+                      "title": "SNV HGVS",
+                      "description": "SNV HGVS."
+                    }
+                  },
+                  "required": [
+                    "transcript",
+                    "HGVS"
+                  ],
+                  "title": "SNV description",
+                  "description": "SNV description."
+                }
+              },
+              "required": [
+                "signature",
+                "causality",
+                "score",
+                "score_history",
+                "annotation_list",
+                "description"
+              ]
+            },
+            "title": "Diagnosis likelihood SNV data list",
+            "description": "List of SNV data contributing to the diagnosis likelihood score."
+          },
+          "diagnosis_likelihood_cnv_list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "signature": {
+                  "type": "string",
+                  "minLength": 1,
+                  "title": "VARIANT signature",
+                  "description": "VARIANT signature: :."
+                },
+                "causality": {
+                  "type": "string",
+                  "enum": [
+                    "causal",
+                    "supplementary"
+                  ],
+                  "title": "VARIANT causality",
+                  "description": "VARIANT causality: likely_causative, likely_non_causative, non_causative."
+                },
+                "score": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "enum": [
+                        "pathogenic",
+                        "likely pathogenic",
+                        "uncertain significance high",
+                        "uncertain significance",
+                        "uncertain significance low",
+                        "likely benign",
+                        "benign"
+                      ],
+                      "title": "Variant score label",
+                      "description": "Variant score label."
+                    },
+                    "value": {
+                      "type": "number",
+                      "title": "Variant score value",
+                      "description": "Variant score value."
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "value"
+                  ],
+                  "title": "VARIANT score",
+                  "description": "VARIANT score."
+                },
+                "score_history": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Score cause text",
+                        "description": "Text describing a cause for the score value."
+                      },
+                      "score": {
+                        "type": "number",
+                        "title": "Score cause value",
+                        "description": "Value for the score cause."
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "score"
+                    ]
+                  },
+                  "title": "VARIANT scoring history",
+                  "description": "VARIANT scoring history."
+                },
+                "annotation_list": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": "VARIANT annotation list",
+                  "description": "VARIANT annotation list."
+                },
+                "description": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "DEL",
+                        "DUP"
+                      ],
+                      "title": "CNV type",
+                      "description": "CNV type."
+                    },
+                    "transcript": {
+                      "type": "string",
+                      "minLength": 1,
+                      "title": "CNV transcript",
+                      "description": "CNV transcript."
+                    },
+                    "exon_range": {
+                      "type": "string",
+                      "minLength": 1,
+                      "title": "CNV exon range",
+                      "description": "CNV exon range."
+                    },
+                    "is_intronic": {
+                      "type": "boolean",
+                      "title": "CNV is intronic",
+                      "description": "CNV is intronic."
+                    },
+                    "is_intergenic": {
+                      "type": "boolean",
+                      "title": "CNV is intergenic",
+                      "description": "CNV is intergenic."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "transcript",
+                    "exon_range",
+                    "is_intronic",
+                    "is_intergenic"
+                  ],
+                  "title": "CNV description",
+                  "description": "CNV description."
+                },
+                "nb_gene_overlap": {
+                  "type": "integer",
+                  "title": "CNV nb gene overlap",
+                  "description": "Nb of genes overlaped by this CNV."
+                }
+              },
+              "required": [
+                "signature",
+                "causality",
+                "score",
+                "score_history",
+                "annotation_list",
+                "description",
+                "nb_gene_overlap"
+              ]
+            },
+            "title": "Diagnosis likelihood CNV data list",
+            "description": "List of CNV data contributing to the diagnosis likelihood score."
+          }
+        },
+        "required": [
+          "gene",
+          "disease",
+          "inheritance_mode_list",
+          "annotation_list",
+          "patient_phenotype_match_list",
+          "patient_onset_match",
+          "diagnosis_likelihood",
+          "diagnosis_likelihood_history",
+          "diagnosis_likelihood_snv_list",
+          "diagnosis_likelihood_cnv_list"
+        ]
+      },
+      "title": "Disease gene list",
+      "description": "List of annotations and diagnosis likelihood scoring data for a disease gene."
+    },
+    "multigenic_cnv_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "signature": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Multigenic CNV signature",
+            "description": "Multigenic CNV signature: chr:start:end:type."
+          },
+          "gene_list": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": "Multigenic CNV gene list",
+            "description": "Multigenic CNV gene list."
+          }
+        },
+        "required": [
+          "signature",
+          "gene_list"
+        ]
+      },
+      "title": "Multigenic CNV list",
+      "description": "List of multigenic CNVs."
+    },
+    "upd_stats": {
+      "type": "object",
+      "properties": {
+        "maternal_snv_percent_average": {
+          "type": "number",
+          "title": "Maternal SNV percent average (%)",
+          "description": "Maternal SNV percent average (%)."
+        },
+        "maternal_snv_percent_stdev": {
+          "type": "number",
+          "title": "Maternal SNV percent stdev (%)",
+          "description": "Maternal SNV percent stdev (%)."
+        },
+        "maternal_snv_percent_by_chromosome": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "chromosome": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Chromosome",
+                "description": "Chromosome."
+              },
+              "maternal_snv_percent": {
+                "type": "number",
+                "title": "Maternal SNV percent ()",
+                "description": "Maternal SNV percent (%)."
+              },
+              "in_expected_percent_range": {
+                "type": "boolean",
+                "title": "In expected percent range",
+                "description": "In expected percent range."
+              }
+            },
+            "required": [
+              "chromosome",
+              "maternal_snv_percent",
+              "in_expected_percent_range"
+            ]
+          },
+          "title": "Maternal UPD stats by chromosome",
+          "description": "Maternal UPD stats by chromosome."
+        },
+        "expected_percent_range_min": {
+          "type": "number",
+          "title": "Expected percent range min (%)",
+          "description": "Expected percent range min (%)."
+        },
+        "expected_percent_range_max": {
+          "type": "number",
+          "title": "Expected percent range max (%)",
+          "description": "Expected percent range max (%)."
+        }
+      },
+      "required": [
+        "maternal_snv_percent_average",
+        "maternal_snv_percent_stdev",
+        "maternal_snv_percent_by_chromosome"
+      ],
+      "title": "UPD stats",
+      "description": "Uniparental disomy stats on maternal inherited SNVs by chromosome. Absent (None/null) for solo test"
+    },
+    "schema_version": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Response data JSON schema version",
+      "description": "Response data JSON schema version."
+    }
+  },
+  "required": [
+    "message",
+    "authenticated_as",
+    "externalid",
+    "label",
+    "cohort",
+    "barcode",
+    "disease_gene_list",
+    "multigenic_cnv_list",
+    "upd_stats"
+  ]
+}
