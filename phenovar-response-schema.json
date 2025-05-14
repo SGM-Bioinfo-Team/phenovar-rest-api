@@ -5,6 +5,66 @@
   "description": "JSON response for the Phenovar REST API endpoint dxtablegenerator/generate.",
   "type": "object",
   "properties": {
+    "patient_details": {
+      "type": "object",
+      "properties": {
+        "externalid": {
+          "type": "string",
+          "minLength": 1,
+          "title": "External ID",
+          "description": "A unique identifier for the patient. Typically the issuing laboratory ID. Required."
+        },
+        "sex": {
+          "type": "string",
+          "enum": [
+            "",
+            "F",
+            "M",
+            "H"
+          ],
+          "title": "Sex",
+          "description": "Sex of the patient. F for female, M for male. Version française: F pour femme, H pour homme. Optional."
+        },
+        "maternal_affected": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Mother is affected",
+          "description": "Whether the mother is affected. Optional."
+        },
+        "paternal_affected": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Father is affected",
+          "description": "Whether the father is affected. Optional."
+        },
+        "label": {
+          "type": "string",
+          "title": "Label",
+          "description": "An additional label to identify patient. Optional."
+        },
+        "cohort": {
+          "type": "string",
+          "title": "Cohort",
+          "description": "Cohort name, for categorisation. Optional."
+        },
+        "barcode": {
+          "type": "string",
+          "minLength": 1,
+          "title": "Barcode",
+          "description": "Phenovar3 patient barcode."
+        }
+      },
+      "required": [
+        "externalid",
+        "barcode"
+      ],
+      "title": "Patient details",
+      "description": "Patient identification and attributes."
+    },
     "disease_gene_list": {
       "type": "array",
       "items": {
@@ -114,7 +174,7 @@
             "title": "Disease gene annotation data",
             "description": "Selected annotation data for this disease gene."
           },
-          "patient_phenotype_match_list": {
+          "patient_phenotype_matching_list": {
             "type": "array",
             "items": {
               "type": "object",
@@ -131,50 +191,33 @@
                   "title": "Patient phenotype HPO term name",
                   "description": "Patient phenotype HPO term name."
                 },
-                "is_matching": {
-                  "type": "boolean",
-                  "title": "Patient phenotype is matching disease",
-                  "description": "Patient phenotype is matching disease phenotype."
-                },
                 "matching_level": {
-                  "type": [
-                    "integer",
-                    "null"
-                  ],
+                  "type": "integer",
                   "title": "Patient phenotype matching level",
-                  "description": "Patient phenotype matching level vs disease phenotype. Can be None/null.\n        <ul>\n            <li>0: exact match, e.g. both patient and disease term are exactly the same.</li>\n            <li>>0: patient term is more specific by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=3 meaning that patient term \"Ventricular septal defect\" is more specific by three level than disease term \"Abnormal heart morphology\".</li></ul>\n            <li><0: patient term is more general by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=-1 meaning that patient term \"Growth delay\" is more general by one level than disease term \"Short stature\".</li></ul>\n            <li>None/null: no match.</li>\n        </ul>\n        "
+                  "description": "Patient phenotype matching level vs disease phenotype.\n        <ul>\n            <li>0: exact match, e.g. both patient and disease term are exactly the same.</li>\n            <li>>0: patient term is more specific by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=3 meaning that patient term \"Ventricular septal defect\" is more specific by three level than disease term \"Abnormal heart morphology\".</li></ul>\n            <li><0: patient term is more general by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=-1 meaning that patient term \"Growth delay\" is more general by one level than disease term \"Short stature\".</li></ul>\n        </ul>\n        "
                 },
                 "disease_hpo_code": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
+                  "type": "string",
                   "minLength": 1,
                   "title": "Disease phenotype HPO term code",
-                  "description": "Disease phenotype HPO term code. None/null if no match."
+                  "description": "Disease phenotype HPO term code."
                 },
                 "disease_hpo_name": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
+                  "type": "string",
                   "minLength": 1,
                   "title": "Disease phenotype HPO term name",
-                  "description": "Disease phenotype HPO term name. None/null if no match."
+                  "description": "Disease phenotype HPO term name."
                 }
               },
               "required": [
                 "patient_hpo_code",
-                "patient_hpo_name",
-                "is_matching",
-                "disease_hpo_code",
-                "disease_hpo_name"
+                "patient_hpo_name"
               ]
             },
-            "title": "Patient phenotype match data list",
-            "description": "List of phenotype matching data between patient and disease."
+            "title": "Patient phenotype matching data list",
+            "description": "List of patient phenotype data that is matching with disease."
           },
-          "disease_onset_match_list": {
+          "patient_onset_matching_list": {
             "type": "array",
             "items": {
               "type": "object",
@@ -191,47 +234,30 @@
                   "title": "Patient phenotype HPO term name",
                   "description": "Patient phenotype HPO term name."
                 },
-                "is_matching": {
-                  "type": "boolean",
-                  "title": "Patient phenotype is matching disease",
-                  "description": "Patient phenotype is matching disease phenotype."
-                },
                 "matching_level": {
-                  "type": [
-                    "integer",
-                    "null"
-                  ],
+                  "type": "integer",
                   "title": "Patient phenotype matching level",
-                  "description": "Patient phenotype matching level vs disease phenotype. Can be None/null.\n        <ul>\n            <li>0: exact match, e.g. both patient and disease term are exactly the same.</li>\n            <li>>0: patient term is more specific by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=3 meaning that patient term \"Ventricular septal defect\" is more specific by three level than disease term \"Abnormal heart morphology\".</li></ul>\n            <li><0: patient term is more general by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=-1 meaning that patient term \"Growth delay\" is more general by one level than disease term \"Short stature\".</li></ul>\n            <li>None/null: no match.</li>\n        </ul>\n        "
+                  "description": "Patient phenotype matching level vs disease phenotype.\n        <ul>\n            <li>0: exact match, e.g. both patient and disease term are exactly the same.</li>\n            <li>>0: patient term is more specific by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=3 meaning that patient term \"Ventricular septal defect\" is more specific by three level than disease term \"Abnormal heart morphology\".</li></ul>\n            <li><0: patient term is more general by this amount of hierarchy level than disease term.</li>\n                <ul><li>E.g.: value=-1 meaning that patient term \"Growth delay\" is more general by one level than disease term \"Short stature\".</li></ul>\n        </ul>\n        "
                 },
                 "disease_hpo_code": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
+                  "type": "string",
                   "minLength": 1,
                   "title": "Disease phenotype HPO term code",
-                  "description": "Disease phenotype HPO term code. None/null if no match."
+                  "description": "Disease phenotype HPO term code."
                 },
                 "disease_hpo_name": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
+                  "type": "string",
                   "minLength": 1,
                   "title": "Disease phenotype HPO term name",
-                  "description": "Disease phenotype HPO term name. None/null if no match."
+                  "description": "Disease phenotype HPO term name."
                 }
               },
               "required": [
                 "patient_hpo_code",
-                "patient_hpo_name",
-                "is_matching",
-                "disease_hpo_code",
-                "disease_hpo_name"
+                "patient_hpo_name"
               ]
             },
-            "title": "Disease onset match data list",
+            "title": "Patient onset match data list",
             "description": "List of onset matching data between disease and patient. Absent (None/null) if patient have no onset data."
           },
           "diagnosis_likelihood": {
@@ -258,6 +284,80 @@
                 "title": "Diagnosis likelihood score",
                 "description": "Diagnosis likelihood score."
               },
+              "genotypic_score_data": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "title": "Score cause text",
+                    "description": "Text describing a cause for the score value."
+                  },
+                  "score": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "title": "Score cause value",
+                    "description": "Value for the score cause."
+                  },
+                  "label": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "title": "Score cause label",
+                    "description": "Label for the score cause."
+                  }
+                },
+                "required": [
+                  "text",
+                  "score"
+                ],
+                "title": "Genotypic score data",
+                "description": "Data for the genotypic part of the diagnosis likelihood score ."
+              },
+              "phenotypic_score_data": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "title": "Score cause text",
+                    "description": "Text describing a cause for the score value."
+                  },
+                  "score": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "title": "Score cause value",
+                    "description": "Value for the score cause."
+                  },
+                  "label": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "title": "Score cause label",
+                    "description": "Label for the score cause."
+                  }
+                },
+                "required": [
+                  "text",
+                  "score"
+                ],
+                "title": "Phenotypic score data",
+                "description": "Data for the phenotypic part of the diagnosis likelihood score ."
+              },
               "filter_mode": {
                 "type": "string",
                 "enum": [
@@ -273,6 +373,8 @@
               "label",
               "rank",
               "score",
+              "genotypic_score_data",
+              "phenotypic_score_data",
               "filter_mode"
             ],
             "title": "Diagnosis likelihood score data",
@@ -284,18 +386,27 @@
               "type": "object",
               "properties": {
                 "text": {
-                  "type": "string",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
                   "minLength": 1,
                   "title": "Score cause text",
                   "description": "Text describing a cause for the score value."
                 },
                 "score": {
-                  "type": "number",
+                  "type": [
+                    "number",
+                    "null"
+                  ],
                   "title": "Score cause value",
                   "description": "Value for the score cause."
                 },
                 "label": {
-                  "type": "string",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
                   "minLength": 1,
                   "title": "Score cause label",
                   "description": "Label for the score cause."
@@ -371,18 +482,27 @@
                     "type": "object",
                     "properties": {
                       "text": {
-                        "type": "string",
+                        "type": [
+                          "string",
+                          "null"
+                        ],
                         "minLength": 1,
                         "title": "Score cause text",
                         "description": "Text describing a cause for the score value."
                       },
                       "score": {
-                        "type": "number",
+                        "type": [
+                          "number",
+                          "null"
+                        ],
                         "title": "Score cause value",
                         "description": "Value for the score cause."
                       },
                       "label": {
-                        "type": "string",
+                        "type": [
+                          "string",
+                          "null"
+                        ],
                         "minLength": 1,
                         "title": "Score cause label",
                         "description": "Label for the score cause."
@@ -426,7 +546,7 @@
                   "title": "Variant description",
                   "description": "Variant description."
                 },
-                "annotation": {
+                "annotation_data": {
                   "type": "object",
                   "properties": {
                     "parental_origin": {
@@ -452,8 +572,8 @@
                     "parental_origin",
                     "parental_origin_zigosity"
                   ],
-                  "title": "Variant annotation",
-                  "description": "Variant annotation."
+                  "title": "Variant annotation data",
+                  "description": "Variant annotation data."
                 }
               },
               "required": [
@@ -462,7 +582,7 @@
                 "score",
                 "score_history",
                 "description",
-                "annotation"
+                "annotation_data"
               ]
             },
             "title": "SNV data list",
@@ -530,18 +650,27 @@
                     "type": "object",
                     "properties": {
                       "text": {
-                        "type": "string",
+                        "type": [
+                          "string",
+                          "null"
+                        ],
                         "minLength": 1,
                         "title": "Score cause text",
                         "description": "Text describing a cause for the score value."
                       },
                       "score": {
-                        "type": "number",
+                        "type": [
+                          "number",
+                          "null"
+                        ],
                         "title": "Score cause value",
                         "description": "Value for the score cause."
                       },
                       "label": {
-                        "type": "string",
+                        "type": [
+                          "string",
+                          "null"
+                        ],
                         "minLength": 1,
                         "title": "Score cause label",
                         "description": "Label for the score cause."
@@ -606,7 +735,7 @@
                   "title": "Variant description",
                   "description": "Variant description."
                 },
-                "annotation": {
+                "annotation_data": {
                   "type": "object",
                   "properties": {
                     "dragen_filter": {
@@ -666,8 +795,8 @@
                     "dgv_data",
                     "parental_origin"
                   ],
-                  "title": "Variant annotation",
-                  "description": "Variant annotation."
+                  "title": "Variant annotation data",
+                  "description": "Variant annotation data."
                 }
               },
               "required": [
@@ -676,7 +805,7 @@
                 "score",
                 "score_history",
                 "description",
-                "annotation"
+                "annotation_data"
               ]
             },
             "title": "CNV data list",
@@ -688,8 +817,8 @@
           "disease",
           "inheritance_mode_list",
           "annotation_data",
-          "patient_phenotype_match_list",
-          "disease_onset_match_list",
+          "patient_phenotype_matching_list",
+          "patient_onset_matching_list",
           "diagnosis_likelihood",
           "diagnosis_likelihood_history",
           "snv_list",
@@ -698,9 +827,109 @@
       },
       "title": "Disease gene list",
       "description": "List of annotations and diagnosis likelihood scoring data for a disease gene."
+    },
+    "multigenic_cnv_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "signature": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Multigenic CNV signature",
+            "description": "Multigenic CNV signature: chr:start:end:type."
+          },
+          "gene_list": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": "Multigenic CNV gene list",
+            "description": "Multigenic CNV gene list."
+          }
+        },
+        "required": [
+          "signature",
+          "gene_list"
+        ]
+      },
+      "title": "Multigenic CNV list",
+      "description": "List of multigenic CNVs."
+    },
+    "upd_stats": {
+      "type": "object",
+      "properties": {
+        "maternal_snv_percent_average": {
+          "type": "number",
+          "title": "Maternal SNV percent average (%)",
+          "description": "Maternal SNV percent average (%)."
+        },
+        "maternal_snv_percent_stdev": {
+          "type": "number",
+          "title": "Maternal SNV percent stdev (%)",
+          "description": "Maternal SNV percent stdev (%)."
+        },
+        "maternal_snv_percent_by_chromosome": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "chromosome": {
+                "type": "string",
+                "minLength": 1,
+                "title": "Chromosome",
+                "description": "Chromosome."
+              },
+              "maternal_snv_percent": {
+                "type": "number",
+                "title": "Maternal SNV percent ()",
+                "description": "Maternal SNV percent (%)."
+              },
+              "in_expected_percent_range": {
+                "type": "boolean",
+                "title": "In expected percent range",
+                "description": "In expected percent range."
+              }
+            },
+            "required": [
+              "chromosome",
+              "maternal_snv_percent",
+              "in_expected_percent_range"
+            ]
+          },
+          "title": "Maternal UPD stats by chromosome",
+          "description": "Maternal UPD stats by chromosome."
+        },
+        "expected_percent_range_min": {
+          "type": "number",
+          "title": "Expected percent range min (%)",
+          "description": "Expected percent range min (%)."
+        },
+        "expected_percent_range_max": {
+          "type": "number",
+          "title": "Expected percent range max (%)",
+          "description": "Expected percent range max (%)."
+        }
+      },
+      "required": [
+        "maternal_snv_percent_average",
+        "maternal_snv_percent_stdev",
+        "maternal_snv_percent_by_chromosome"
+      ],
+      "title": "UPD stats",
+      "description": "Uniparental disomy stats on maternal inherited SNVs by chromosome. Absent for solo test"
+    },
+    "schema_version": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Response data JSON schema version",
+      "description": "Response data JSON schema version."
     }
   },
   "required": [
-    "disease_gene_list"
+    "patient_details",
+    "disease_gene_list",
+    "multigenic_cnv_list"
   ]
 }
