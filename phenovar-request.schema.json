@@ -17,6 +17,7 @@
         "sex": {
           "type": "string",
           "enum": [
+            "",
             "F",
             "M",
             "H"
@@ -25,24 +26,28 @@
           "description": "Sex of the patient. F for female, M for male. Version française: F pour femme, H pour homme. Optional."
         },
         "maternal_affected": {
-          "type": "boolean",
+          "type": [
+            "boolean",
+            "null"
+          ],
           "title": "Mother is affected",
           "description": "Whether the mother is affected. Optional."
         },
         "paternal_affected": {
-          "type": "boolean",
+          "type": [
+            "boolean",
+            "null"
+          ],
           "title": "Father is affected",
           "description": "Whether the father is affected. Optional."
         },
         "label": {
           "type": "string",
-          "minLength": 1,
           "title": "Label",
           "description": "An additional label to identify patient. Optional."
         },
         "cohort": {
           "type": "string",
-          "minLength": 1,
           "title": "Cohort",
           "description": "Cohort name, for categorisation. Optional."
         }
@@ -50,7 +55,7 @@
       "required": [
         "externalid"
       ],
-      "title": "Patient Details ... ...",
+      "title": "Patient details",
       "description": "Identifies the patient and provides optional attributes. Required."
     },
     "phenotype_hpo_code_list": {
@@ -93,11 +98,6 @@
             ],
             "title": "File type",
             "description": "Type of file."
-          },
-          "reuse": {
-            "type": "boolean",
-            "title": "Reuse",
-            "description": "Reuse the already processed file. Optional."
           }
         },
         "required": [
@@ -142,6 +142,11 @@
       "title": "Download specifications",
       "description": "Download specifications. Optional."
     },
+    "reuse_generated_files": {
+      "type": "boolean",
+      "title": "Reuse generated files",
+      "description": "Reuse any file that was previoulsy generated, instead of regenerating. Default is to always regenerate. Optional."
+    },
     "schema_version": {
       "type": "string",
       "enum": [
@@ -154,11 +159,6 @@
       "type": "boolean",
       "title": "No file processing (for dev only)",
       "description": "Disable file processing. Optional. For dev only."
-    },
-    "dev_no_dxtable_creation": {
-      "type": "boolean",
-      "title": "No Dxtable creation (for dev only)",
-      "description": "Disable Dxtable creation. Optional. For dev only."
     }
   },
   "required": [
