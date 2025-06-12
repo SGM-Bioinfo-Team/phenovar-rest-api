@@ -444,7 +444,7 @@
                     "supplementary"
                   ],
                   "title": "Variant causality",
-                  "description": "Variant causality: likely_causative, likely_non_causative, non_causative."
+                  "description": "Variant causality: causal or supplementary."
                 },
                 "score": {
                   "type": "object",
@@ -612,7 +612,7 @@
                     "supplementary"
                   ],
                   "title": "Variant causality",
-                  "description": "Variant causality: likely_causative, likely_non_causative, non_causative."
+                  "description": "Variant causality: causal or supplementary."
                 },
                 "score": {
                   "type": "object",
