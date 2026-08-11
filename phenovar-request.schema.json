@@ -147,6 +147,11 @@
       "title": "Reuse generated files",
       "description": "Reuse any file that was previoulsy generated, instead of regenerating. Default is to always regenerate. Optional."
     },
+    "keep_file_generator_work_dir": {
+      "type": "boolean",
+      "title": "Keep file generator work directory",
+      "description": "Keep temporary files and directories created during file generation. Default is to delete. Optional."
+    },
     "schema_version": {
       "type": "string",
       "enum": [
